@@ -3,6 +3,7 @@ package ca.josue.roomdemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initRecyclerView()
+
     }
 
     private fun initRecyclerView() {
@@ -37,7 +39,13 @@ class MainActivity : AppCompatActivity() {
     private fun displaySubscribersList() {
         subscriberViewModel.subscribers.observe(this) { subscribers ->
             Log.i("MYTAG", subscribers.toString())
-            binding.subscriberRecyclerView.adapter = RecyclerViewAdapter(subscribers)
+            binding.subscriberRecyclerView.adapter = RecyclerViewAdapter(subscribers) { selectedItem: Subscriber ->
+                listItemClicked(selectedItem)
+            }
         }
+    }
+
+    private fun listItemClicked(subscriber: Subscriber) {
+        Toast.makeText(this, "selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
     }
 }
