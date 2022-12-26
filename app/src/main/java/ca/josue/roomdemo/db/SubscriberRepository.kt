@@ -2,7 +2,7 @@ package ca.josue.roomdemo.db
 
 class SubscriberRepository(private val dao: SubscriberDAO) {
 
-    suspend fun subscribers() = dao.getAllSubscribers()
+    val subscribers = dao.getAllSubscribers()
 
     suspend fun insert(subscriber: Subscriber) : Long {
         return dao.insertSubscriber(subscriber)

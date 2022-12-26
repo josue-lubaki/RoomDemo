@@ -23,7 +23,6 @@ abstract class SubscriberDatabase : RoomDatabase() {
                         SubscriberDatabase::class.java,
                         "subscriber_data_database"
                     ).build()
-                    INSTANCE = instance
                 }
                 return instance
             }

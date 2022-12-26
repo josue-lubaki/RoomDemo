@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="myViewModel"
             type="ca.josue.roomdemo.SubscriberViewModel" />
     </data>
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_margin="15dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:text= "@={viewModel.inputName}"
+            android:text= "@={myViewModel.inputName}"
             android:hint="@string/subscriber_s_name"
             android:inputType="textPersonName"
             android:textStyle="bold"
@@ -35,7 +35,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:text="@={viewModel.inputEmail}"
+            android:text="@={myViewModel.inputEmail}"
             android:hint="@string/subscriber_s_email"
             android:inputType="textEmailAddress"
             android:textStyle="bold"
@@ -51,8 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@={viewModel.saveOrUpdateButtonText}"
-                android:onClick="@{() -> viewModel.saveOrUpdate()}"
+                android:text="@={myViewModel.saveOrUpdateButtonText}"
+                android:onClick="@{() -> myViewModel.saveOrUpdate()}"
                 android:textSize="18sp"
                 android:layout_marginEnd="5dp"
                 android:textStyle="bold" />
@@ -62,8 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@={viewModel.clearAllOrDeleteButtonText}"
-                android:onClick="@{() -> viewModel.clearAllOrDelete()}"
+                android:text="@={myViewModel.clearAllOrDeleteButtonText}"
+                android:onClick="@{() -> myViewModel.clearAllOrDelete()}"
                 android:layout_marginStart="5dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -9,9 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SubscriberViewModel(private val repository: SubscriberRepository) : ViewModel() {
-    val subscribers = viewModelScope.launch(Dispatchers.IO) {
-        repository.subscribers()
-    }
+    val subscribers = repository.subscribers
 
     val inputName = MutableLiveData<String>()
     val inputEmail = MutableLiveData<String>()
@@ -27,6 +25,8 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     fun saveOrUpdate() {
         val name = inputName.value!!
         val email = inputEmail.value!!
+
+        if (name.isEmpty() || email.isEmpty()) return
 
         insert(Subscriber(0, name, email))
         inputName.value = ""
