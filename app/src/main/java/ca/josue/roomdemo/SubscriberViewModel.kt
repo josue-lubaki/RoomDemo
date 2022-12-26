@@ -1,5 +1,6 @@
 package ca.josue.roomdemo
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import ca.josue.roomdemo.db.SubscriberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.regex.Pattern
 
 class SubscriberViewModel(private val repository: SubscriberRepository) : ViewModel() {
     val subscribers = repository.subscribers
@@ -33,6 +35,20 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     }
 
     fun saveOrUpdate() {
+        val name = inputName.value!!
+        val email = inputEmail.value!!
+
+        if (name.isEmpty()){
+            statusMessage.value = Event("Please enter subscriber's name")
+            return
+        } else if (email.isEmpty()){
+            statusMessage.value = Event("Please enter subscriber's email")
+            return
+        } else if(Patterns.EMAIL_ADDRESS.matcher(email).matches().not()){
+            statusMessage.value = Event("Please enter a valid email")
+            return
+        }
+
         if (isUpdateOrDelete){
             subscriberToUpdateOrDelete.name = inputName.value!!
             subscriberToUpdateOrDelete.email = inputEmail.value!!
@@ -40,10 +56,6 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
             return
         }
 
-        val name = inputName.value!!
-        val email = inputEmail.value!!
-
-        if (name.isEmpty() || email.isEmpty()) return
         insert(Subscriber(0, name, email))
     }
 
