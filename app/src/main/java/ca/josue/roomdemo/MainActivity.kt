@@ -2,7 +2,6 @@ package ca.josue.roomdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun displaySubscribersList() {
         subscriberViewModel.subscribers.observe(this) { subscribers ->
-            Log.i("MYTAG", subscribers.toString())
             binding.subscriberRecyclerView.adapter = RecyclerViewAdapter(subscribers) { selectedItem: Subscriber ->
                 listItemClicked(selectedItem)
             }
