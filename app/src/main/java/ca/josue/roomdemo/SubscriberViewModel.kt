@@ -1,5 +1,6 @@
 package ca.josue.roomdemo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,11 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     private var isUpdateOrDelete = false
     private lateinit var subscriberToUpdateOrDelete: Subscriber
+
+    // Event
+    private val statusMessage = MutableLiveData<Event<String>>()
+
+    val messages : LiveData<Event<String>> get() = statusMessage
 
     init {
         saveOrUpdateButtonText.value = "Save"
@@ -51,6 +57,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     private fun insert(subscriber: Subscriber) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(subscriber)
         withContext(Dispatchers.Main) {
+            statusMessage.value = Event("Subscriber Inserted Successfully")
             inputName.value = ""
             inputEmail.value = ""
         }
@@ -64,6 +71,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
             isUpdateOrDelete = false
             saveOrUpdateButtonText.value = "Save"
             clearAllOrDeleteButtonText.value = "Clear All"
+            statusMessage.value = Event("Subscriber Updated Successfully")
         }
     }
 
@@ -75,11 +83,15 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
             isUpdateOrDelete = false
             saveOrUpdateButtonText.value = "Save"
             clearAllOrDeleteButtonText.value = "Clear All"
+            statusMessage.value = Event("Subscriber Deleted Successfully")
         }
     }
 
     private fun clearAll() = viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAll()
+        repository.deleteAll()
+        withContext(Dispatchers.Main) {
+            statusMessage.value = Event("All Subscribers Deleted Successfully")
+        }
     }
 
     fun initUpdateAndDelete(subscriber: Subscriber) {
