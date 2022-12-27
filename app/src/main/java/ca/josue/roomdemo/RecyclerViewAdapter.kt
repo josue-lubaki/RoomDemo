@@ -1,5 +1,6 @@
 package ca.josue.roomdemo
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -7,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.josue.roomdemo.databinding.ListItemBinding
 import ca.josue.roomdemo.db.Subscriber
 
-class RecyclerViewAdapter(
-    private var subscribers: List<Subscriber>,
-    private val clickListener: (Subscriber) -> Unit
-    ) : RecyclerView.Adapter<MyViewHolder>() {
+class RecyclerViewAdapter(private val clickListener: (Subscriber) -> Unit) : RecyclerView.Adapter<MyViewHolder>() {
+
+    private var subscribers: MutableList<Subscriber> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,6 +24,13 @@ class RecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         return subscribers.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(subscribers: List<Subscriber>) {
+        this.subscribers.clear()
+        this.subscribers.addAll(subscribers)
+        notifyDataSetChanged()
     }
 }
 
