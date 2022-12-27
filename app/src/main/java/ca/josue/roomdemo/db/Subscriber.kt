@@ -13,6 +13,6 @@ data class Subscriber (
     @ColumnInfo(name = "subscriber_name")
     var name: String,
 
-    @ColumnInfo(name = "subscriber_email")
+    @ColumnInfo(name = "subscriber_email_address")
     var email: String
 )
