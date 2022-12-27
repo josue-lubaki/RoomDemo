@@ -19,6 +19,18 @@ android {
             enabled = true
         }
 
+        // Migration schema with Room
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+
+        // equivalent Java :
+        //        tasks.withType(JavaCompile) {
+        //            options.compilerArgs << "-Aroom.schemaLocation=$projectDir/schemas"
+        //        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
