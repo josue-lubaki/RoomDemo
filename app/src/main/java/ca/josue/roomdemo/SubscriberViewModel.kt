@@ -4,16 +4,20 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import ca.josue.roomdemo.db.Subscriber
 import ca.josue.roomdemo.db.SubscriberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.regex.Pattern
 
 class SubscriberViewModel(private val repository: SubscriberRepository) : ViewModel() {
-    val subscribers = repository.subscribers
+    val subscribers : LiveData<List<Subscriber>> = liveData {
+        repository.subscribers.collect {
+            emit(it)
+        }
+    }
 
     val inputName = MutableLiveData<String>()
     val inputEmail = MutableLiveData<String>()

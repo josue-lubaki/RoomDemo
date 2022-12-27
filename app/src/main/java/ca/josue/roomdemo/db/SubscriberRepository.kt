@@ -1,8 +1,10 @@
 package ca.josue.roomdemo.db
 
+import kotlinx.coroutines.flow.Flow
+
 class SubscriberRepository(private val dao: SubscriberDAO) {
 
-    val subscribers = dao.getAllSubscribers()
+    val subscribers : Flow<List<Subscriber>> = dao.getAllSubscribers()
 
     suspend fun insert(subscriber: Subscriber) : Long {
         return dao.insertSubscriber(subscriber)
